@@ -1,7 +1,7 @@
 package br.com.lojavirtual.lojavirtual.reources;
 
 import java.net.URI;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -28,11 +28,7 @@ public class CategoriaResource {
 
 	@GetMapping
 	public ResponseEntity<List<Categoria>> listar() {
-//		Categoria cat1 = new Categoria(1, "Informática");
-//		Categoria cat2 = new Categoria(2, "Eletônicos");
-//		List<Categoria> colecaocategoria = new ArrayList<>();
-//		colecaocategoria.add(cat1);
-//		colecaocategoria.add(cat2);
+
 		return ResponseEntity.status(HttpStatus.OK).body(categoriasevice.buscatodos());
 	}
 
