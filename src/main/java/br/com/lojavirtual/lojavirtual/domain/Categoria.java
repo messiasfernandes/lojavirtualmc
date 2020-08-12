@@ -2,12 +2,23 @@ package br.com.lojavirtual.lojavirtual.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+@Entity
 public class Categoria implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
-
+    @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+   
+    @Column(length = 60, unique = true, nullable = false)
 	private String nomecategoria;
 	
 	public Categoria() {
@@ -28,7 +39,7 @@ public class Categoria implements Serializable {
 		return nomecategoria;
 	}
 	public void setNomecategoria(String nomecategoria) {
-		this.nomecategoria = nomecategoria;
+		this.nomecategoria = nomecategoria.toUpperCase();
 	}
 	@Override
 	public int hashCode() {
