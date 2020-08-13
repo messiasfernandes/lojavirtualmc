@@ -1,12 +1,16 @@
 package br.com.lojavirtual.lojavirtual.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Estado implements Serializable {
@@ -14,41 +18,55 @@ public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer codigo;
-	@Column(length = 2)
-	private String uf;
-	@Column(length = 90)
-	private String nomestado;
+	private Integer id;
+	@NotEmpty
+	@Column(length = 80, nullable = false)
+	private String nomeestado;
 
-	public Integer getCodigo() {
-		return codigo;
+	@OneToMany(mappedBy = "estado")
+	private List<Cidade> cidades = new ArrayList<Cidade>();
+
+	public Estado() {
+
+	}
+     
+	public Estado(Integer id, @NotEmpty String nomeestado) {
+		super();
+		this.id = id;
+		this.nomeestado = nomeestado;
 	}
 
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
+	public Integer getId() {
+		return id;
 	}
 
-	public String getUf() {
-		return uf;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setUf(String uf) {
-		this.uf = uf;
+	
+
+	public String getNomeestado() {
+		return nomeestado;
 	}
 
-	public String getNomestado() {
-		return nomestado;
+	public void setNomeestado(String nomeestado) {
+		this.nomeestado = nomeestado;
 	}
 
-	public void setNomestado(String nomestado) {
-		this.nomestado = nomestado;
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -61,10 +79,10 @@ public class Estado implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Estado other = (Estado) obj;
-		if (codigo == null) {
-			if (other.codigo != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!codigo.equals(other.codigo))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

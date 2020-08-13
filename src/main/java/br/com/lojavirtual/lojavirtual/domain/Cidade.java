@@ -10,58 +10,63 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-
 @Entity
 public class Cidade implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer codigo_cidade;
-    @Column(length = 7, nullable = false)
-  	private String codigoibge;
-    @Column(length = 60, nullable = false)
-	private String cidadenome;
-  
-    @javax.validation.constraints.NotNull
-    @ManyToOne
-    @JoinColumn(name = "codigoestado")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	@Column()
+	private String nomecidade;
+
+	@ManyToOne
+	@JoinColumn(name = "estado_id")
 	private Estado estado;
 
-	
-	public Integer getCodigo_cidade() {
-		return codigo_cidade;
+	public Cidade() {
+
 	}
-	public void setCodigo_cidade(Integer codigo_cidade) {
-		this.codigo_cidade = codigo_cidade;
+
+	public Cidade(Integer id, String nomecidade, Estado estado) {
+		super();
+		this.id = id;
+		this.nomecidade = nomecidade;
+		this.estado = estado;
 	}
-	public String getCodigoibge() {
-		return codigoibge;
+
+	public Integer getId() {
+		return id;
 	}
-	public void setCodigoibge(String codigoibge) {
-		this.codigoibge = codigoibge;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public String getCidadenome() {
-		return cidadenome;
+
+	public String getNomecidade() {
+		return nomecidade;
 	}
-	public void setCidadenome(String cidadenome) {
-		this.cidadenome = cidadenome;
+
+	public void setNomecidade(String nomecidade) {
+		this.nomecidade = nomecidade;
 	}
 
 	public Estado getEstado() {
 		return estado;
 	}
+
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((codigo_cidade == null) ? 0 : codigo_cidade.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -71,13 +76,11 @@ public class Cidade implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Cidade other = (Cidade) obj;
-		if (codigo_cidade == null) {
-			if (other.codigo_cidade != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!codigo_cidade.equals(other.codigo_cidade))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-	
-	
 }
