@@ -1,24 +1,45 @@
 package br.com.lojavirtual.lojavirtual.domain;
 
-public class Endreco {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class Endereco {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String logradouro;
 	private Integer numero;
 	private String complemento;
 	private String bairro;
 	private String cep;
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
+	@ManyToOne
+	@JoinColumn(name = "cidade_id")
+	private Cidade cidade;
 
-	public Endreco(Integer id, String logradouro, Integer numero, String complemento, String bairro,String cep) {
+	public Endereco(Integer id, String logradouro, Integer numero, String complemento, String bairro,String cep,Cidade cidade,Cliente cliente) {
 		super();
 		this.id = id;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
 		this.bairro = bairro;
-		this.setCep(cep);
+		this.cep=cep;
+		this.cidade = cidade;
+		this.cliente= cliente;
+		
 	}
 
-	public Endreco() {
+
+
+	public Endereco() {
 
 	}
 
@@ -61,6 +82,34 @@ public class Endreco {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+	
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -78,7 +127,7 @@ public class Endreco {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Endreco other = (Endreco) obj;
+		Endereco other = (Endereco) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -87,12 +136,6 @@ public class Endreco {
 		return true;
 	}
 
-	public String getCep() {
-		return cep;
-	}
 
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
 
 }
