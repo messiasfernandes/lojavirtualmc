@@ -3,17 +3,21 @@ package br.com.lojavirtual.lojavirtual.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -28,15 +32,15 @@ public class Produto implements Serializable {
 	@NotBlank
 	@Column(length = 80, nullable = false)
 	private String nomeproduto;
-	
+
 	private BigDecimal preco;
 
 	@JsonBackReference
 	@ManyToMany
-	@JoinTable(name = "PRODUTO_CATEGORIA",
-			joinColumns = @JoinColumn(name = "produto_id"),
-			inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<Categoria>();
+	@OneToMany(mappedBy = "id.produto",fetch=FetchType.EAGER)
+	private Set<ItemPedido> items = new HashSet<>();
 
 	public Produto() {
 
@@ -79,6 +83,21 @@ public class Produto implements Serializable {
 
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+
+	public Set<ItemPedido> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<ItemPedido> items) {
+		this.items = items;
+	}
+	public List<Pedido> getPedidos(){
+		List<Pedido> lista =new ArrayList<Pedido>();
+		for(ItemPedido i : items) {
+			lista.add(i.gePedido());
+		}
+		return lista;
 	}
 
 	@Override
